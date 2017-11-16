@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BurguesiadbModelStoreContainer" CdmEntityContainer="BurguesiadbEntities">
+    <EntitySetMapping Name="tipoUsuarios">
+      <EntityTypeMapping TypeName="BurguesiadbModel.tipoUsuarios">
+        <MappingFragment StoreEntitySet="tipoUsuarios">
+          <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+          <ScalarProperty Name="descripcionUsuario" ColumnName="descripcionUsuario" />
+          <ScalarProperty Name="nivelPermisos" ColumnName="nivelPermisos" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuarios">
+      <EntityTypeMapping TypeName="BurguesiadbModel.usuarios">
+        <MappingFragment StoreEntitySet="usuarios">
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="nombreUsuario" ColumnName="nombreUsuario" />
+          <ScalarProperty Name="contrasenaUsuario" ColumnName="contrasenaUsuario" />
+          <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spLogin" FunctionName="BurguesiadbModel.Store.spLogin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BurguesiadbModel.spLogin_Result">
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="nombreUsuario" ColumnName="nombreUsuario" />
+          <ScalarProperty Name="contrasenaUsuario" ColumnName="contrasenaUsuario" />
+          <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="listaBebidas">
+      <EntityTypeMapping TypeName="BurguesiadbModel.listaBebidas">
+        <MappingFragment StoreEntitySet="listaBebidas">
+          <ScalarProperty Name="imagenBebida" ColumnName="imagenBebida" />
+          <ScalarProperty Name="precioBebida" ColumnName="precioBebida" />
+          <ScalarProperty Name="descripcionBebida" ColumnName="descripcionBebida" />
+          <ScalarProperty Name="nombreBebida" ColumnName="nombreBebida" />
+          <ScalarProperty Name="idBebida" ColumnName="idBebida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="listaComidas">
+      <EntityTypeMapping TypeName="BurguesiadbModel.listaComidas">
+        <MappingFragment StoreEntitySet="listaComidas">
+          <ScalarProperty Name="imagenComida" ColumnName="imagenComida" />
+          <ScalarProperty Name="precioComida" ColumnName="precioComida" />
+          <ScalarProperty Name="descripcionComida" ColumnName="descripcionComida" />
+          <ScalarProperty Name="nombreComida" ColumnName="nombreComida" />
+          <ScalarProperty Name="idComida" ColumnName="idComida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="promociones">
+      <EntityTypeMapping TypeName="BurguesiadbModel.promociones">
+        <MappingFragment StoreEntitySet="promociones">
+          <ScalarProperty Name="categoriaPromocion" ColumnName="categoriaPromocion" />
+          <ScalarProperty Name="CostoPromocion" ColumnName="CostoPromocion" />
+          <ScalarProperty Name="descripcionPromocion" ColumnName="descripcionPromocion" />
+          <ScalarProperty Name="idPromocion" ColumnName="idPromocion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="promocionesContratadas">
+      <EntityTypeMapping TypeName="BurguesiadbModel.promocionesContratadas">
+        <MappingFragment StoreEntitySet="promocionesContratadas">
+          <ScalarProperty Name="fechaEntrega" ColumnName="fechaEntrega" />
+          <ScalarProperty Name="fechaPedido" ColumnName="fechaPedido" />
+          <ScalarProperty Name="direccionCliente" ColumnName="direccionCliente" />
+          <ScalarProperty Name="telefonoCliente" ColumnName="telefonoCliente" />
+          <ScalarProperty Name="apellidoCliente" ColumnName="apellidoCliente" />
+          <ScalarProperty Name="nombreCliente" ColumnName="nombreCliente" />
+          <ScalarProperty Name="idPromocion" ColumnName="idPromocion" />
+          <ScalarProperty Name="idPromocionContratada" ColumnName="idPromocionContratada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="proveedores">
+      <EntityTypeMapping TypeName="BurguesiadbModel.proveedores">
+        <MappingFragment StoreEntitySet="proveedores">
+          <ScalarProperty Name="telefonoProveedor" ColumnName="telefonoProveedor" />
+          <ScalarProperty Name="domicilioProveedor" ColumnName="domicilioProveedor" />
+          <ScalarProperty Name="nombreProveedor" ColumnName="nombreProveedor" />
+          <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="listarBebidas" FunctionName="BurguesiadbModel.Store.listarBebidas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BurguesiadbModel.listarBebidas_Result">
+          <ScalarProperty Name="idBebida" ColumnName="idBebida" />
+          <ScalarProperty Name="nombreBebida" ColumnName="nombreBebida" />
+          <ScalarProperty Name="descripcionBebida" ColumnName="descripcionBebida" />
+          <ScalarProperty Name="precioBebida" ColumnName="precioBebida" />
+          <ScalarProperty Name="imagenBebida" ColumnName="imagenBebida" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="listarComidas" FunctionName="BurguesiadbModel.Store.listarComidas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BurguesiadbModel.listarComidas_Result">
+          <ScalarProperty Name="idComida" ColumnName="idComida" />
+          <ScalarProperty Name="nombreComida" ColumnName="nombreComida" />
+          <ScalarProperty Name="descripcionComida" ColumnName="descripcionComida" />
+          <ScalarProperty Name="precioComida" ColumnName="precioComida" />
+          <ScalarProperty Name="imagenComida" ColumnName="imagenComida" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="listarPromociones" FunctionName="BurguesiadbModel.Store.listarPromociones">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BurguesiadbModel.listarPromociones_Result">
+          <ScalarProperty Name="idPromocion" ColumnName="idPromocion" />
+          <ScalarProperty Name="descripcionPromocion" ColumnName="descripcionPromocion" />
+          <ScalarProperty Name="CostoPromocion" ColumnName="CostoPromocion" />
+          <ScalarProperty Name="categoriaPromocion" ColumnName="categoriaPromocion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="contratarPromocion" FunctionName="BurguesiadbModel.Store.contratarPromocion">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BurguesiadbModel.contratarPromocion_Result">
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

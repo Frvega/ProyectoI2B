@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BurguesiadbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="listaBebidas">
+    <Key>
+      <PropertyRef Name="idBebida" />
+    </Key>
+    <Property Name="idBebida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreBebida" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="descripcionBebida" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="precioBebida" Type="int" Nullable="false" />
+    <Property Name="imagenBebida" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="listaComidas">
+    <Key>
+      <PropertyRef Name="idComida" />
+    </Key>
+    <Property Name="idComida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreComida" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="descripcionComida" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="precioComida" Type="int" Nullable="false" />
+    <Property Name="imagenComida" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="promociones">
+    <Key>
+      <PropertyRef Name="idPromocion" />
+    </Key>
+    <Property Name="idPromocion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcionPromocion" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="CostoPromocion" Type="int" Nullable="false" />
+    <Property Name="categoriaPromocion" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="promocionesContratadas">
+    <Key>
+      <PropertyRef Name="idPromocionContratada" />
+    </Key>
+    <Property Name="idPromocionContratada" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idPromocion" Type="int" Nullable="false" />
+    <Property Name="nombreCliente" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="apellidoCliente" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="telefonoCliente" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="direccionCliente" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="fechaPedido" Type="varchar" MaxLength="12" Nullable="false" />
+    <Property Name="fechaEntrega" Type="varchar" MaxLength="12" Nullable="false" />
+  </EntityType>
+  <EntityType Name="proveedores">
+    <Key>
+      <PropertyRef Name="idProveedor" />
+    </Key>
+    <Property Name="idProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreProveedor" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="domicilioProveedor" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefonoProveedor" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tipoUsuarios">
+    <Key>
+      <PropertyRef Name="idTipoUsuario" />
+    </Key>
+    <Property Name="idTipoUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcionUsuario" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="nivelPermisos" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreUsuario" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="contrasenaUsuario" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="idTipoUsuario" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_idPromocion">
+    <End Role="promociones" Type="Self.promociones" Multiplicity="1" />
+    <End Role="promocionesContratadas" Type="Self.promocionesContratadas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="promociones">
+        <PropertyRef Name="idPromocion" />
+      </Principal>
+      <Dependent Role="promocionesContratadas">
+        <PropertyRef Name="idPromocion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_idTipoUsuario">
+    <End Role="tipoUsuarios" Type="Self.tipoUsuarios" Multiplicity="1" />
+    <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipoUsuarios">
+        <PropertyRef Name="idTipoUsuario" />
+      </Principal>
+      <Dependent Role="usuarios">
+        <PropertyRef Name="idTipoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="contratarPromocion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPromocion" Type="int" Mode="In" />
+    <Parameter Name="nombreCliente" Type="varchar" Mode="In" />
+    <Parameter Name="apellidoCliente" Type="varchar" Mode="In" />
+    <Parameter Name="direccionCliente" Type="varchar" Mode="In" />
+    <Parameter Name="telefonoCliente" Type="varchar" Mode="In" />
+    <Parameter Name="fechaPedido" Type="varchar" Mode="In" />
+    <Parameter Name="fechaEntrega" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="listarBebidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="listarComidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="listarPromociones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="spLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="user" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="puesto" Type="int" Mode="InOut" />
+    <Parameter Name="resultadoValidacion" Type="int" Mode="InOut" />
+  </Function>
+  <EntityContainer Name="BurguesiadbModelStoreContainer">
+    <EntitySet Name="listaBebidas" EntityType="Self.listaBebidas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="listaComidas" EntityType="Self.listaComidas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="promociones" EntityType="Self.promociones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="promocionesContratadas" EntityType="Self.promocionesContratadas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="proveedores" EntityType="Self.proveedores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipoUsuarios" EntityType="Self.tipoUsuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_idPromocion" Association="Self.fk_idPromocion">
+      <End Role="promociones" EntitySet="promociones" />
+      <End Role="promocionesContratadas" EntitySet="promocionesContratadas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_idTipoUsuario" Association="Self.FK_idTipoUsuario">
+      <End Role="tipoUsuarios" EntitySet="tipoUsuarios" />
+      <End Role="usuarios" EntitySet="usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BurguesiadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tipoUsuarios">
+    <Key>
+      <PropertyRef Name="idTipoUsuario" />
+    </Key>
+    <Property Name="idTipoUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcionUsuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nivelPermisos" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="usuarios" Relationship="Self.FK_idTipoUsuario" FromRole="tipoUsuarios" ToRole="usuarios" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="idUsuario" />
+    </Key>
+    <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreUsuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="contrasenaUsuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idTipoUsuario" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tipoUsuarios" Relationship="Self.FK_idTipoUsuario" FromRole="usuarios" ToRole="tipoUsuarios" />
+  </EntityType>
+  <Association Name="FK_idTipoUsuario">
+    <End Role="tipoUsuarios" Type="Self.tipoUsuarios" Multiplicity="1" />
+    <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipoUsuarios">
+        <PropertyRef Name="idTipoUsuario" />
+      </Principal>
+      <Dependent Role="usuarios">
+        <PropertyRef Name="idTipoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BurguesiadbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tipoUsuarios" EntityType="Self.tipoUsuarios" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" />
+    <AssociationSet Name="FK_idTipoUsuario" Association="Self.FK_idTipoUsuario">
+      <End Role="tipoUsuarios" EntitySet="tipoUsuarios" />
+      <End Role="usuarios" EntitySet="usuarios" />
+    </AssociationSet>
+    <FunctionImport Name="spLogin" ReturnType="Collection(BurguesiadbModel.spLogin_Result)">
+      <Parameter Name="user" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="puesto" Mode="InOut" Type="Int32" />
+      <Parameter Name="resultadoValidacion" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="listaBebidas" EntityType="BurguesiadbModel.listaBebidas" />
+    <EntitySet Name="listaComidas" EntityType="BurguesiadbModel.listaComidas" />
+    <EntitySet Name="promociones" EntityType="BurguesiadbModel.promociones" />
+    <EntitySet Name="promocionesContratadas" EntityType="BurguesiadbModel.promocionesContratadas" />
+    <EntitySet Name="proveedores" EntityType="BurguesiadbModel.proveedores" />
+    <AssociationSet Name="fk_idPromocion" Association="BurguesiadbModel.fk_idPromocion">
+      <End Role="promociones" EntitySet="promociones" />
+      <End Role="promocionesContratadas" EntitySet="promocionesContratadas" />
+    </AssociationSet>
+    <FunctionImport Name="listarBebidas" ReturnType="Collection(BurguesiadbModel.listarBebidas_Result)" />
+    <FunctionImport Name="listarComidas" ReturnType="Collection(BurguesiadbModel.listarComidas_Result)" />
+    <FunctionImport Name="listarPromociones" ReturnType="Collection(BurguesiadbModel.listarPromociones_Result)" />
+    <FunctionImport Name="contratarPromocion" ReturnType="Collection(BurguesiadbModel.contratarPromocion_Result)">
+      <Parameter Name="idPromocion" Mode="In" Type="Int32" />
+      <Parameter Name="nombreCliente" Mode="In" Type="String" />
+      <Parameter Name="apellidoCliente" Mode="In" Type="String" />
+      <Parameter Name="direccionCliente" Mode="In" Type="String" />
+      <Parameter Name="telefonoCliente" Mode="In" Type="String" />
+      <Parameter Name="fechaPedido" Mode="In" Type="String" />
+      <Parameter Name="fechaEntrega" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="spLogin_Result">
+    <Property Type="Int32" Name="idUsuario" Nullable="false" />
+    <Property Type="String" Name="nombreUsuario" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="contrasenaUsuario" Nullable="false" MaxLength="15" />
+    <Property Type="Int32" Name="idTipoUsuario" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="listaBebidas">
+    <Key>
+      <PropertyRef Name="idBebida" />
+    </Key>
+    <Property Name="idBebida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreBebida" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="descripcionBebida" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="precioBebida" Type="Int32" Nullable="false" />
+    <Property Name="imagenBebida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="listaComidas">
+    <Key>
+      <PropertyRef Name="idComida" />
+    </Key>
+    <Property Name="idComida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreComida" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="descripcionComida" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="precioComida" Type="Int32" Nullable="false" />
+    <Property Name="imagenComida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="promociones">
+    <Key>
+      <PropertyRef Name="idPromocion" />
+    </Key>
+    <Property Name="idPromocion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcionPromocion" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="CostoPromocion" Type="Int32" Nullable="false" />
+    <Property Name="categoriaPromocion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="promocionesContratadas" Relationship="BurguesiadbModel.fk_idPromocion" FromRole="promociones" ToRole="promocionesContratadas" />
+  </EntityType>
+  <EntityType Name="promocionesContratadas">
+    <Key>
+      <PropertyRef Name="idPromocionContratada" />
+    </Key>
+    <Property Name="idPromocionContratada" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idPromocion" Type="Int32" Nullable="false" />
+    <Property Name="nombreCliente" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="apellidoCliente" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="telefonoCliente" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="direccionCliente" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="fechaPedido" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="fechaEntrega" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="promociones" Relationship="BurguesiadbModel.fk_idPromocion" FromRole="promocionesContratadas" ToRole="promociones" />
+  </EntityType>
+  <EntityType Name="proveedores">
+    <Key>
+      <PropertyRef Name="idProveedor" />
+    </Key>
+    <Property Name="idProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreProveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="domicilioProveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="telefonoProveedor" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="fk_idPromocion">
+    <End Type="BurguesiadbModel.promociones" Role="promociones" Multiplicity="1" />
+    <End Type="BurguesiadbModel.promocionesContratadas" Role="promocionesContratadas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="promociones">
+        <PropertyRef Name="idPromocion" />
+      </Principal>
+      <Dependent Role="promocionesContratadas">
+        <PropertyRef Name="idPromocion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="listarBebidas_Result">
+    <Property Type="Int32" Name="idBebida" Nullable="false" />
+    <Property Type="String" Name="nombreBebida" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="descripcionBebida" Nullable="false" MaxLength="200" />
+    <Property Type="Int32" Name="precioBebida" Nullable="false" />
+    <Property Type="String" Name="imagenBebida" Nullable="false" MaxLength="25" />
+  </ComplexType>
+  <ComplexType Name="listarComidas_Result">
+    <Property Type="Int32" Name="idComida" Nullable="false" />
+    <Property Type="String" Name="nombreComida" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="descripcionComida" Nullable="false" MaxLength="200" />
+    <Property Type="Int32" Name="precioComida" Nullable="false" />
+    <Property Type="String" Name="imagenComida" Nullable="false" MaxLength="25" />
+  </ComplexType>
+  <ComplexType Name="listarPromociones_Result">
+    <Property Type="Int32" Name="idPromocion" Nullable="false" />
+    <Property Type="String" Name="descripcionPromocion" Nullable="false" MaxLength="300" />
+    <Property Type="Int32" Name="CostoPromocion" Nullable="false" />
+    <Property Type="String" Name="categoriaPromocion" Nullable="false" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="contratarPromocion_Result">
+    <Property Type="String" Name="Mensaje" Nullable="false" MaxLength="25" />
+    <Property Type="Int32" Name="Resultado" Nullable="false" />
+  </ComplexType>
+</Schema>
